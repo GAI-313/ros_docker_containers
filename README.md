@@ -1,5 +1,9 @@
 # ros_docker_containers
 - devel macOS
+
+ Ubuntu でも利用可能だが、[ubuntu-develブランチ](https://github.com/GAI-313/ros_docker_containers/tree/ubuntu-devel)のほうを使用することを推奨する。
+
+- Windows のかたは [windows-devel](https://github.com/GAI-313/ros_docker_containers/tree/windows-devel)を参照してください。
 ## 前提
 - Docker をインストールする
 ## インストール
