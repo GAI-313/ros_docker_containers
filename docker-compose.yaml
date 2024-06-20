@@ -2,9 +2,47 @@ version: "3.7"
 services:
   humble:
     container_name: humble
-    image: nakalab/ros:humble-df-mac
+    image: nakalab/ros:humble-mac
     build:
-      context: .
+      context: humble
+      args:
+        - USER_NAME=${USER_NAME}
+        - GROUP_NAME=${GROUP_NAME}
+        - UID=${UID}
+        - GID=${GID}
+        - PSWD=${PSWD}
+        - WS_DIR=${WS_DIR}
+      network: host
+    environment:
+      - USER=${USER_NAME}
+      #- DISPLAY=${DISPLAY}
+      - NO_AT_BRIDGE=1
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
+    volumes:
+      - ${WS_DIR}:/home/${USER_NAME}/ros_ws/src/ros_pkgs
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority/:/root/.Xauthority
+      - /dev:/dev
+    ports:
+      - "8888:8888"
+      - "8080:8080" # Web VNC
+      - "5901:5901" # VNC
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - seccomp:unconfined  
+    ipc: host
+    network_mode: host
+    user: "${UID}:${GID}"
+    tty: true
+    stdin_open: true
+    command: /bin/bash -c "/tmp/vnc_startup.sh; bash"
+
+  noetic:
+    container_name: noetic
+    image: nakalab/ros:noetic-mac
+    build:
+      context: noetic
       args:
         - USER_NAME=${USER_NAME}
         - GROUP_NAME=${GROUP_NAME}
@@ -16,7 +54,6 @@ services:
     environment:
       - DISPLAY=${DISPLAY}
       - NO_AT_BRIDGE=1
-      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
     volumes:
       - ${WS_DIR}:/home/${USER_NAME}/ros_ws/src/ros_pkgs
       - /tmp/.X11-unix:/tmp/.X11-unix
@@ -33,4 +70,4 @@ services:
     user: "${UID}:${GID}"
     tty: true
     stdin_open: true
-    command: /bin/bash
+    command: /bin/bash -c "roscore"

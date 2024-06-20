@@ -1,6 +1,6 @@
-### Ubuntu 22.04 ROS2 HUMBLE
+### Ubuntu 22.04 ROS2 noetic
 ## 元となるイメージを選択
-FROM osrf/ros:humble-desktop-full
+FROM osrf/ros:noetic-desktop-full
 
 ## 作成するイメージにメタデータを追記
 LABEL maintainer="Gai Nakatogawa"\
@@ -28,7 +28,7 @@ RUN locale-gen ja_JP ja_JP.UTF-8 ;\
 ENV LANG ja_JP.UTF-8
 ENV TZ=Asia/Tokyo
 
-## ROS やその他必要なパッケージをインストール
+## その他必要なパッケージをインストール
 RUN apt-get update && apt-get install -y \
     build-essential cmake g++ \
     iproute2 gnupg gnupg1 gnupg2 \
@@ -37,9 +37,11 @@ RUN apt-get update && apt-get install -y \
     git wget curl \
     x11-utils x11-apps terminator xterm xauth \
     terminator xterm nano vim htop \
-    software-properties-common gdb valgrind sudo \
-    python3-colcon-common-extensions
+    software-properties-common gdb valgrind sudo
+# ROS 関連のパッケージをインストール
+RUN apt install -y python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential python3-catkin-tools
 
+    
 ## jupyter notebook
 RUN pip install notebook
 
@@ -63,11 +65,11 @@ COPY ./nanorc /home/${USER_NAME}/.nanorc
 ## ROS ワークスペースの作成
 RUN mkdir -p ros_ws/src/ros_pkgs
 COPY ./ros_pkgs /home/${USER_NAME}/ros_ws/src/ros_pkgs
-RUN cd ros_ws; source /opt/ros/humble/setup.bash ;colcon build
+RUN cd ros_ws; source /opt/ros/noetic/setup.bash ;catkin build
 
 ## .bashrc の設定
-RUN echo "PS1='\[\033[47;30m\]HUMBLE\[\033[0m\]@\[\033[32m\]\u\[\033[0m\]:\[\033[1;33m\]\w\[\033[0m\]$ '" >> /home/${USER_NAME}/.bashrc
-RUN echo "source /opt/ros/humble/setup.bash" >> /home/${USER_NAME}/.bashrc
-RUN echo "source /home/${USER_NAME}/ros_ws/install/setup.bash" >> /home/${USER_NAME}/.bashrc
+RUN echo "PS1='\[\033[47;30m\]NOETIC\[\033[0m\]@\[\033[32m\]\u\[\033[0m\]:\[\033[1;33m\]\w\[\033[0m\]$ '" >> /home/${USER_NAME}/.bashrc
+RUN echo "source /opt/ros/noetic/setup.bash" >> /home/${USER_NAME}/.bashrc
+RUN echo "source /home/${USER_NAME}/ros_ws/devel/setup.bash" >> /home/${USER_NAME}/.bashrc
 
 WORKDIR /home/${USER_NAME}/ros_ws/src
