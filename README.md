@@ -1,6 +1,21 @@
-# ros docker containers
-各種 ROS ディストロカスタムコンテナをまとめたリポジトリ
+# jazzy
+## build
+- CPU<br>
+    ```bash
+    docker build -f Dockerfile.jazzy -t gai313/nakalab_docker:jazzy-cpu-base .
 
-- [jazzy](jazzy)
-- [~~humble~~](humble)
-- [~~noetic~~](noetic)
+    ```
+
+## container bringup
+detach
+- CPU<br>
+    ```bash
+    docker compose up -d jazzy-cpu
+    ```
+
+## container entry
+detach
+- CPU<br>
+    ```bash
+    docker compose exec jazzy-cpu bash
+    ```
