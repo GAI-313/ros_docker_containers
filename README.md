@@ -1,19 +1,19 @@
-# jazzy
+# ros_docker_containers
 ## container bringup
 リポジトリからイメージが Pull されます.
-- **CPU**<br>
+- **MAC**<br>
     ```bash
-    docker compose up -d jazzy-cpu
+    docker compose up -d DISTRO-mac
     ```
 
 ## container entry
-- **CPU**<br>
+- **MAC**<br>
     ```bash
-    docker compose exec jazzy-cpu bash
+    docker compose exec DISTRO-mac bash
     ```
 
 ## build
 ```bash
-docker build -f Dockerfile.jazzy -t gai313/nakalab_docker:jazzy-base .
+docker build -f Dockerfile.DISTRO -t gai313/nakalab_docker:DISTRO-base .
 
 ```
