@@ -1,27 +1,53 @@
 services:
-  jazzy-cpu:
-    container_name: jazzy-cpu
-    image: gai313/nakalab_docker:jazzy-cpu-base
+  # JAZZY
+  jazzy-mac:
+    container_name: jazzy-mac
+    image: gai313/nakalab_docker:jazzy-base
     privileged: true
     ipc: host
     network_mode: host
     tty: true
     stdin_open: true
-    #user: "${UID}:${GID}"
-    #build:
-      #context: .
-      #args:
     environment:
-      - DISPLAY=${DISPLAY}
-      - PULSE_COOKIE=/tmp/pulse/cookie
-      - PULSE_SERVER=unix:/tmp/pulse/native
       - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
       - ROS_AUTOMATIC_DISCOVERY_RANGE=${ROS_AUTOMATIC_DISCOVERY_RANGE}
-    #volumes:
-      #- /run/user/1000/pulse/native:/tmp/pulse/native
-      #- ~/.config/pulse/cookie:/tmp/pulse/cookie:ro
-      #- /tmp/.X11-unix:/tmp/.X11-unix
-      #- $HOME/.Xauthority/:/root/.Xauthority
-      #- /dev:/dev
-    #devices:
-       #- /dev:/dev
+
+  # HUMBLE
+  humble-mac:
+    container_name: humble-mac
+    image: gai313/nakalab_docker:humble-base
+    privileged: true
+    ipc: host
+    network_mode: host
+    tty: true
+    stdin_open: true
+    environment:
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
+      - ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}
+
+  # FOXY
+  foxy-mac:
+    container_name: foxy-mac
+    image: gai313/nakalab_docker:foxy-base
+    privileged: true
+    ipc: host
+    network_mode: host
+    tty: true
+    stdin_open: true
+    environment:
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
+      - ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}
+
+  # NOETIC
+  noetic-mac:
+    container_name: noetic-mac
+    image: gai313/nakalab_docker:noetic-base
+    privileged: true
+    ipc: host
+    network_mode: host
+    tty: true
+    stdin_open: true
+    environment:
+      - ROS_MASTER_URI=${ROS_MASTER_URI}
+      - ROS_IP=${ROS_IP}
+    command: /bin/bash -c ". /opt/ros/noetic/setup.bash && roscore"
