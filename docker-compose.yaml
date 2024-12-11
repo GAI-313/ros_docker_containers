@@ -14,7 +14,7 @@ services:
 
   jazzy-gpu:
     container_name: jazzy-gpu
-    image: gai313/nakalab_docker:jazzy-base
+    image: gai313/nakalab_docker:jazzy-desktop
     privileged: true
     ipc: host
     network_mode: host
@@ -75,7 +75,7 @@ services:
   
   humble-gpu:
     container_name: humble-gpu
-    image: gai313/nakalab_docker:humble-base
+    image: gai313/nakalab_docker:humble-desktop
     privileged: true
     ipc: host
     network_mode: host
@@ -119,7 +119,7 @@ services:
   
   foxy-gpu:
     container_name: foxy-gpu
-    image: gai313/nakalab_docker:foxy-base
+    image: gai313/nakalab_docker:foxy-desktop
     privileged: true
     ipc: host
     network_mode: host
@@ -164,7 +164,7 @@ services:
   
   noetic-gpu:
     container_name: noetic-gpu
-    image: gai313/nakalab_docker:noetic-base
+    image: gai313/nakalab_docker:noetic-desktop
     privileged: true
     ipc: host
     network_mode: host
