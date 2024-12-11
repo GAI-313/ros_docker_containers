@@ -9,11 +9,20 @@
     ```bash
     docker compose up -d DISTRO-mac
     ```
+- **GPU**<br>
+    ```bash
+    xhost + local:
+    docker compose up -d DISTRO-gpu
+    ```
 
 ## container entry
 - **MAC**<br>
     ```bash
     docker compose exec DISTRO-mac bash
+    ```
+- **GPU**<br>
+    ```bash
+    docker compose exec DISTRO-gpu bash
     ```
 
 ## build
