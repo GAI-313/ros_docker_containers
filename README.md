@@ -1,4 +1,8 @@
 # ros_docker_containers
+
+> [!CAUTION]
+> jazzy-vnc は開発中で、正常に機能しない場合があります。
+
 ## container bringup
 リポジトリからイメージが Pull されます.
 - **MAC**<br>

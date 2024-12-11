@@ -12,6 +12,23 @@ services:
       - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
       - ROS_AUTOMATIC_DISCOVERY_RANGE=${ROS_AUTOMATIC_DISCOVERY_RANGE}
 
+  jazzy-vnc:
+    container_name: jazzy-vnc
+    image: gai313/nakalab_docker:jazzy-vnc
+    privileged: true
+    ipc: host
+    network_mode: host
+    tty: true
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: ./vnc/Dockerfile.jazzy.vnc
+    environment:
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
+      - ROS_AUTOMATIC_DISCOVERY_RANGE=${ROS_AUTOMATIC_DISCOVERY_RANGE}
+    ports:
+      - 5901:5901
+
   # HUMBLE
   humble-mac:
     container_name: humble-mac
