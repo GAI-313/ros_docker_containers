@@ -4,13 +4,11 @@ SHELL ["/bin/bash", "-c"]
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-ENV LANG ja_JP.UTF-8
-ENV TZ=Asia/Tokyo
+ENV LANG=ja_JP.UTF-8
+ENV TZ=asia/Tokyo
 
-ENV NVIDIA_VISIBLE_DEVICES \
-    ${NVIDIA_VISIBLE_DEVICES:-all}
-ENV NVIDIA_DRIVER_CAPABILITIES \
-    ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
+ENV NVIDIA_VISIBLE_DEVICES=${NVIDIA_VISIBLE_DEVICES:-all}
+ENV NVIDIA_DRIVER_CAPABILITIES=${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
 
 
 # time zone setup
@@ -34,6 +32,12 @@ RUN apt-get update && apt-get install -y curl &&\
 
 
 RUN echo ". /opt/ros/jazzy/setup.bash" >> /root/.bashrc
+RUN echo ". /colcon_ws/install/setup.bash" >> /root/.bashrc
 RUN echo "export PS1='\[\033[47;30m\]\$ROS_DISTRO\[\033[0m\]:\[\033[32m\]\u:\[\033[36m\]\w \[\033[37m\]\$ '" >> /root/.bashrc
+
+
+WORKDIR /colcon_ws
+RUN mkdir src && colcon build --symlink-install
+
 
 CMD ["/bin/bash"]

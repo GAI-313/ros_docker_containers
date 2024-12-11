@@ -8,8 +8,8 @@ services:
     tty: true
     stdin_open: true
     #user: "${UID}:${GID}"
-    build:
-      context: .
+    #build:
+      #context: .
       #args:
     environment:
       - DISPLAY=${DISPLAY}
