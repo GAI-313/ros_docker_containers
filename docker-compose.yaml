@@ -191,4 +191,4 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
-    command: " /opt/ros/noetic/setup.bash && roscore & terminator"
+    command: /bin/bash -c ". /opt/ros/noetic/setup.bash && roscore & terminator"
