@@ -14,7 +14,7 @@ services:
 
   jazzy-gpu:
     container_name: jazzy-gpu
-    image: gai313/nakalab_docker:jazzy-desktop
+    image: gai313/nakalab_docker:jazzy-base
     privileged: true
     ipc: host
     network_mode: host
@@ -60,6 +60,50 @@ services:
     ports:
       - 5901:5901
 
+  # IRON
+  iron-mac:
+    container_name: iron-mac
+    image: gai313/nakalab_docker:iron-base
+    privileged: true
+    ipc: host
+    network_mode: host
+    tty: true
+    stdin_open: true
+    environment:
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
+      - ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}
+  
+  iron-gpu:
+    container_name: iron-gpu
+    image: gai313/nakalab_docker:iron-base
+    privileged: true
+    ipc: host
+    network_mode: host
+    tty: true
+    stdin_open: true
+    environment:
+      - DISPLAY=${DISPLAY}
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
+      - ROS_AUTOMATIC_DISCOVERY_RANGE=${ROS_AUTOMATIC_DISCOVERY_RANGE}
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    volumes:
+      - /run/user/1000/pulse/native:/tmp/pulse/native
+      - ~/.config/pulse/cookie:/tmp/pulse/cookie:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority/:/root/.Xauthority
+      - /dev:/dev
+    devices:
+       - /dev:/dev
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    command: "/bin/bash -c terminator"
+    
   # HUMBLE
   humble-mac:
     container_name: humble-mac
@@ -75,7 +119,7 @@ services:
   
   humble-gpu:
     container_name: humble-gpu
-    image: gai313/nakalab_docker:humble-desktop
+    image: gai313/nakalab_docker:humble-base
     privileged: true
     ipc: host
     network_mode: host
@@ -119,7 +163,7 @@ services:
   
   foxy-gpu:
     container_name: foxy-gpu
-    image: gai313/nakalab_docker:foxy-desktop
+    image: gai313/nakalab_docker:foxy-base
     privileged: true
     ipc: host
     network_mode: host
@@ -164,7 +208,7 @@ services:
   
   noetic-gpu:
     container_name: noetic-gpu
-    image: gai313/nakalab_docker:noetic-desktop
+    image: gai313/nakalab_docker:noetic-base
     privileged: true
     ipc: host
     network_mode: host
