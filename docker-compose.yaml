@@ -11,6 +11,30 @@ services:
     environment:
       - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
       - ROS_AUTOMATIC_DISCOVERY_RANGE=${ROS_AUTOMATIC_DISCOVERY_RANGE}
+    profiles:
+      - mac
+
+  jazzy-cpu:
+    container_name: jazzy-cpu
+    image: gai313/nakalab_docker:jazzy-base
+    privileged: true
+    ipc: host
+    network_mode: host
+    tty: true
+    stdin_open: true
+    environment:
+      - DISPLAY=${DISPLAY}
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
+      - ROS_AUTOMATIC_DISCOVERY_RANGE=${ROS_AUTOMATIC_DISCOVERY_RANGE}
+    volumes:
+      - /run/user/1000/pulse/native:/tmp/pulse/native
+      - ~/.config/pulse/cookie:/tmp/pulse/cookie:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority/:/root/.Xauthority
+      - /dev:/dev
+    devices:
+       - /dev:/dev
+    command: "/bin/bash -c terminator"
 
   jazzy-gpu:
     container_name: jazzy-gpu
@@ -59,6 +83,8 @@ services:
       - ROS_AUTOMATIC_DISCOVERY_RANGE=${ROS_AUTOMATIC_DISCOVERY_RANGE}
     ports:
       - 5901:5901
+    profiles:
+      - debug
 
   # IRON
   iron-mac:
@@ -72,7 +98,31 @@ services:
     environment:
       - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
       - ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}
+    profiles:
+      - mac
   
+  iron-cpu:
+    container_name: iron-cpu
+    image: gai313/nakalab_docker:iron-base
+    privileged: true
+    ipc: host
+    network_mode: host
+    tty: true
+    stdin_open: true
+    environment:
+      - DISPLAY=${DISPLAY}
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
+      - ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}
+    volumes:
+      - /run/user/1000/pulse/native:/tmp/pulse/native
+      - ~/.config/pulse/cookie:/tmp/pulse/cookie:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority/:/root/.Xauthority
+      - /dev:/dev
+    devices:
+       - /dev:/dev
+    command: "/bin/bash -c terminator"
+
   iron-gpu:
     container_name: iron-gpu
     image: gai313/nakalab_docker:iron-base
@@ -84,7 +134,7 @@ services:
     environment:
       - DISPLAY=${DISPLAY}
       - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
-      - ROS_AUTOMATIC_DISCOVERY_RANGE=${ROS_AUTOMATIC_DISCOVERY_RANGE}
+      - ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=all
     volumes:
@@ -116,7 +166,31 @@ services:
     environment:
       - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
       - ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}
-  
+    profiles:
+      - mac
+
+  humble-cpu:
+    container_name: humble-cpu
+    image: gai313/nakalab_docker:humble-base
+    privileged: true
+    ipc: host
+    network_mode: host
+    tty: true
+    stdin_open: true
+    environment:
+      - DISPLAY=${DISPLAY}
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
+      - ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}
+    volumes:
+      - /run/user/1000/pulse/native:/tmp/pulse/native
+      - ~/.config/pulse/cookie:/tmp/pulse/cookie:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority/:/root/.Xauthority
+      - /dev:/dev
+    devices:
+       - /dev:/dev
+    command: "/bin/bash -c terminator"
+    
   humble-gpu:
     container_name: humble-gpu
     image: gai313/nakalab_docker:humble-base
@@ -128,7 +202,7 @@ services:
     environment:
       - DISPLAY=${DISPLAY}
       - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
-      - ROS_AUTOMATIC_DISCOVERY_RANGE=${ROS_AUTOMATIC_DISCOVERY_RANGE}
+      - ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=all
     volumes:
@@ -160,7 +234,31 @@ services:
     environment:
       - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
       - ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}
+    profiles:
+      - mac
   
+  foxy-cpu:
+    container_name: foxy-cpu
+    image: gai313/nakalab_docker:foxy-base
+    privileged: true
+    ipc: host
+    network_mode: host
+    tty: true
+    stdin_open: true
+    environment:
+      - DISPLAY=${DISPLAY}
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
+      - ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}
+    volumes:
+      - /run/user/1000/pulse/native:/tmp/pulse/native
+      - ~/.config/pulse/cookie:/tmp/pulse/cookie:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority/:/root/.Xauthority
+      - /dev:/dev
+    devices:
+       - /dev:/dev
+    command: "/bin/bash -c terminator"
+
   foxy-gpu:
     container_name: foxy-gpu
     image: gai313/nakalab_docker:foxy-base
@@ -172,7 +270,7 @@ services:
     environment:
       - DISPLAY=${DISPLAY}
       - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
-      - ROS_AUTOMATIC_DISCOVERY_RANGE=${ROS_AUTOMATIC_DISCOVERY_RANGE}
+      - ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=all
     volumes:
@@ -205,7 +303,31 @@ services:
       - ROS_MASTER_URI=${ROS_MASTER_URI}
       - ROS_IP=${ROS_IP}
     command: /bin/bash -c ". /opt/ros/noetic/setup.bash && roscore"
+    profiles:
+      - mac
   
+  noetic-cpu:
+    container_name: noetic-cpu
+    image: gai313/nakalab_docker:noetic-base
+    privileged: true
+    ipc: host
+    network_mode: host
+    tty: true
+    stdin_open: true
+    environment:
+      - DISPLAY=${DISPLAY}
+      - ROS_MASTER_URI=${ROS_MASTER_URI}
+      - ROS_IP=${ROS_IP}
+    volumes:
+      - /run/user/1000/pulse/native:/tmp/pulse/native
+      - ~/.config/pulse/cookie:/tmp/pulse/cookie:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority/:/root/.Xauthority
+      - /dev:/dev
+    devices:
+       - /dev:/dev
+    command: /bin/bash -c ". /opt/ros/noetic/setup.bash && roscore & terminator"
+
   noetic-gpu:
     container_name: noetic-gpu
     image: gai313/nakalab_docker:noetic-base
@@ -216,8 +338,8 @@ services:
     stdin_open: true
     environment:
       - DISPLAY=${DISPLAY}
-      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
-      - ROS_AUTOMATIC_DISCOVERY_RANGE=${ROS_AUTOMATIC_DISCOVERY_RANGE}
+      - ROS_MASTER_URI=${ROS_MASTER_URI}
+      - ROS_IP=${ROS_IP}
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=all
     volumes:
