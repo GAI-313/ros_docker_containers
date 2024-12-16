@@ -1,10 +1,8 @@
 ARG DISTRO=jazzy
 FROM gai313/nakalab_docker:${DISTRO}-base
 
-RUN if [ "${DISTRO}" = "jazzy" ]; then \
-        pip install --break-system-packages notebook; \
-    else \
-        pip install notebook; \
-fi
+RUN apt-get update && apt-get install -y \
+    python3-notebook \
+    && rm -rf /var/lib/apt/lists/*
 
 CMD ["jupyter", "notebook", "--port=8888", "--ip=0.0.0.0", "--allow-root", "--NotebookApp.token=''"]
