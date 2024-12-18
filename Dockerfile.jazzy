@@ -19,7 +19,8 @@ RUN apt-get update && \
     terminator \
     python3-pip &&\
     locale-gen ja_JP ja_JP.UTF-8 && update-locale LC_ALL=ja_JP.UTF-8 LANG=ja_JP.UTF-8 &&\
-    add-apt-repository universe
+    add-apt-repository universe &&\
+    rm -rf /var/lib/apt/lists/*
 
 
 # ROS jazzy and dependencies install
