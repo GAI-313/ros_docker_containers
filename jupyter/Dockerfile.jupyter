@@ -1,8 +1,11 @@
 ARG DISTRO=jazzy
-FROM gai313/nakalab_docker:${DISTRO}-base
+FROM gai313/nakalab_docker:${DISTRO}-desktop
 
 RUN apt-get update && apt-get install -y \
     python3-notebook \
     && rm -rf /var/lib/apt/lists/*
 
-CMD ["jupyter", "notebook", "--port=8888", "--ip=0.0.0.0", "--allow-root", "--NotebookApp.token=''"]
+COPY entrypoint.sh /tmp/entrypoint.sh
+RUN chmod +x /tmp/entrypoint.sh
+ENTRYPOINT ["/tmp/entrypoint.sh"]
+CMD ["--notebook-dir", "/", "--port=8888", "--ip=0.0.0.0", "--allow-root", "--NotebookApp.token=''"]
