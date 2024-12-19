@@ -72,17 +72,13 @@ services:
     image: gai313/nakalab_docker:jazzy-vnc
     privileged: true
     ipc: host
-    network_mode: host
     tty: true
     stdin_open: true
-    build:
-      context: .
-      dockerfile: ./vnc/Dockerfile.jazzy.vnc
     environment:
       - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
       - ROS_AUTOMATIC_DISCOVERY_RANGE=${ROS_AUTOMATIC_DISCOVERY_RANGE}
     ports:
-      - 5901:5901
+      - 6080:80
     profiles:
       - debug
 
@@ -153,7 +149,22 @@ services:
               count: 1
               capabilities: [gpu]
     command: "/bin/bash -c terminator"
-    
+
+  iron-vnc:
+    container_name: iron-vnc
+    image: gai313/nakalab_docker:iron-vnc
+    privileged: true
+    ipc: host
+    tty: true
+    stdin_open: true
+    environment:
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
+      - ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}
+    ports:
+      - 6080:80
+    profiles:
+      - debug
+  
   # HUMBLE
   humble-mac:
     container_name: humble-mac
@@ -222,6 +233,21 @@ services:
               capabilities: [gpu]
     command: "/bin/bash -c terminator"
 
+  humble-vnc:
+    container_name: humble-vnc
+    image: gai313/nakalab_docker:humble-vnc
+    privileged: true
+    ipc: host
+    tty: true
+    stdin_open: true
+    environment:
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
+      - ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}
+    ports:
+      - 6080:80
+    profiles:
+      - debug
+      
   # FOXY
   foxy-mac:
     container_name: foxy-mac
@@ -290,6 +316,21 @@ services:
               capabilities: [gpu]
     command: "/bin/bash -c terminator"
 
+  foxy-vnc:
+    container_name: foxy-vnc
+    image: gai313/nakalab_docker:foxy-vnc
+    privileged: true
+    ipc: host
+    tty: true
+    stdin_open: true
+    environment:
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
+      - ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}
+    ports:
+      - 6080:80
+    profiles:
+      - debug
+      
   # NOETIC
   noetic-mac:
     container_name: noetic-mac
@@ -358,3 +399,18 @@ services:
               count: 1
               capabilities: [gpu]
     command: /bin/bash -c ". /opt/ros/noetic/setup.bash && roscore & terminator"
+
+  noetic-vnc:
+    container_name: noetic-vnc
+    image: gai313/nakalab_docker:noetic-vnc
+    privileged: true
+    ipc: host
+    tty: true
+    stdin_open: true
+    environment:
+      - ROS_MASTER_URI=${ROS_MASTER_URI}
+      - ROS_IP=${ROS_IP}
+    ports:
+      - 6080:80
+    profiles:
+      - debug
