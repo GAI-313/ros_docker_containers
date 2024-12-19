@@ -1,0 +1,39 @@
+ARG DISTRO=jazzy
+FROM gai313/nakalab_docker:${DISTRO}-desktop
+
+# install GUI depends packages
+RUN apt-get update &&\
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    ubuntu-mate-desktop \
+    tigervnc-standalone-server tigervnc-common \
+    supervisor gosu tini &&\
+    rm -rf /var/lib/apt/lists/*
+
+
+# Add tini
+#RUN apt update && apt-get install --reinstall tini
+
+# noVNC and Websockify
+# Set remote resize function enabled by default
+# Disable auto update and crash report
+RUN git clone https://github.com/AtsushiSaito/noVNC.git -b add_clipboard_support /usr/lib/novnc &&\
+    if [ "$(lsb_release -rs)" \< "23" ]; then \
+        pip3 install --no-cache-dir git+https://github.com/novnc/websockify.git@v0.10.0; \
+    else \
+        pip3 install --break-system-packages --no-cache-dir git+https://github.com/novnc/websockify.git@v0.10.0; \
+    fi && \
+    ln -s /usr/lib/novnc/vnc.html /usr/lib/novnc/index.html && \
+    sed -i "s/UI.initSetting('resize', 'off');/UI.initSetting('resize', 'remote');/g" /usr/lib/novnc/app/ui.js && \
+    sed -i 's/Prompt=.*/Prompt=never/' /etc/update-manager/release-upgrades && \
+    sed -i 's/enabled=1/enabled=0/g' /etc/default/apport
+
+#RUN git clone https://github.com/AtsushiSaito/noVNC.git -b add_clipboard_support /usr/lib/novnc &&\
+#    pip3 install --break-system-packages --no-cache-dir git+https://github.com/novnc/websockify.git@v0.10.0 &&\
+#    ln -s /usr/lib/novnc/vnc.html /usr/lib/novnc/index.html &&\
+#    sed -i "s/UI.initSetting('resize', 'off');/UI.initSetting('resize', 'remote');/g" /usr/lib/novnc/app/ui.js &&\
+#    sed -i 's/Prompt=.*/Prompt=never/' /etc/update-manager/release-upgrades &&\
+#s    sed -i 's/enabled=1/enabled=0/g' /etc/default/apport
+
+
+COPY ./entrypoint.sh /tmp/
+ENTRYPOINT [ "/bin/bash", "-c", "/tmp/entrypoint.sh" ]
