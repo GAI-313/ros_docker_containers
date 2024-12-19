@@ -1,8 +1,5 @@
 # ros_docker_containers
 
-> [!CAUTION]
-> jazzy-vnc は開発中で、正常に機能しない場合があります。
-
 Mac、Linux に対応したコンテナを用意しています。
 
 - [macOS](#mac)
@@ -19,10 +16,10 @@ Mac、Linux に対応したコンテナを用意しています。
 - foxy
 - noetic
 
-<a id='mac'></a>'
+<a id='mac'></a>
 ## macOS
 
-<a id='vnc'></a>'
+<a id='vnc'></a>
 ### VNC
 - 事前に **Xquartz** をインストールする必要があります。
 
@@ -32,17 +29,17 @@ docker compose up <DISTRO>-vnc
 ```
 起動後、**http://127.0.0.1:6080** にアクセスするとデスクトップにアクセスできます。
 
-<a id='cui'></a>'
+<a id='cui'></a>
 ### CUI
 サービス `<DISTRO>-mac` を起動します
 ```bash
 docker compose up <DISTRO>-mac
 ```
 
-<a id='linux'></a>'
+<a id='linux'></a>
 ## Linux
 
-<a id='cpu'></a>'
+<a id='cpu'></a>
 ### CPU
 サービス `<DISTRO>-base` を起動します
 ```bash
