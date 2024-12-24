@@ -31,8 +31,9 @@ docker compose up <DISTRO>-vnc
 
 <a id='cui'></a>
 ### CUI
-サービス `<DISTRO>-mac` を起動します
+サービス `<DISTRO>-mac` を起動します。事前に XQuartz を起動して X11 ポートフォワーディングを有効にします。
 ```bash
+xhost +localhost
 docker compose up <DISTRO>-mac
 ```
 

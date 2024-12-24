@@ -9,10 +9,15 @@ services:
     tty: true
     stdin_open: true
     environment:
+      - DISPLAY=host.docker.internal:0.0
       - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
       - ROS_AUTOMATIC_DISCOVERY_RANGE=${ROS_AUTOMATIC_DISCOVERY_RANGE}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
     profiles:
       - mac
+    command: "/bin/bash -c terminator"
+
 
   jazzy-cpu:
     container_name: jazzy-cpu
@@ -92,8 +97,11 @@ services:
     tty: true
     stdin_open: true
     environment:
+      - DISPLAY=host.docker.internal:0.0
       - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
       - ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
     profiles:
       - mac
   
@@ -175,8 +183,11 @@ services:
     tty: true
     stdin_open: true
     environment:
+      - DISPLAY=host.docker.internal:0.0
       - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
       - ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
     profiles:
       - mac
 
@@ -258,8 +269,11 @@ services:
     tty: true
     stdin_open: true
     environment:
+      - DISPLAY=host.docker.internal:0.0
       - ROS_DOMAIN_ID=${ROS_DOMAIN_ID}
       - ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
     profiles:
       - mac
   
@@ -341,9 +355,12 @@ services:
     tty: true
     stdin_open: true
     environment:
+      - DISPLAY=host.docker.internal:0.0
       - ROS_MASTER_URI=${ROS_MASTER_URI}
       - ROS_IP=${ROS_IP}
-    command: /bin/bash -c ". /opt/ros/noetic/setup.bash && roscore"
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    command: /bin/bash -c ". /opt/ros/noetic/setup.bash && roscore & terminator"
     profiles:
       - mac
   
